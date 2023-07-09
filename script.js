@@ -23,13 +23,36 @@
 let cards = document.querySelectorAll(".card");
 let currentPlayer = "X"
 let gameOver = false;
+let firstCard = null;
+let secondCard = null;
 
 cards.forEach((card) => {
   card.addEventListener("click", () => {
-    card.classList.toggle("flipped");
 
     if (!gameOver) {
       currentPlayer = currentPlayer === "X" ? "O" : "X";
+
+      if (!card.classList.contains("flipped") && firstCard !== card && secondCard !== card) {
+        card.classList.add("flipped");
+      }
+
+      if (!firstCard) {
+        firstCard = card;
+      } else if (!secondCard) {
+        secondCard = card;
+
+        if (firstCard.dataset.cardType !== secondCard.dataset.cardType) {
+          setTimeout(() => {
+            firstCard.classList.remove("flipped");
+            secondCard.classList.remove("flipped");
+            firstCard = null;
+            secondCard = null
+          }, 1000);
+        } else {
+          firstCard = null;
+          secondCard = null;
+        }
+      }
       // include the condition player must have flipped 2 cards whether they match or not
       // } else if (checkForWin()) {
       //   gameOver = true;
@@ -52,8 +75,9 @@ resetButton.addEventListener("click", () => {
   cards.forEach((card) => { // this is a loop that goes through each card. forEach card, it removes
     card.dataset.cardType = ""; // the cardType data attribute (sets it to an empty string)
     card.classList.remove("matched"); // and removes the "matched" class. This effectively resets
-  }); // the state of each card "erasing" what type of card it is and whether it's been matched or not.
-  // shuffle();
+    card.classList.remove("flipped"); // the state of each card "erasing" what type of card it is and whether it's been matched or not.
+  }); // finally, card.classList.remove("flipped") removes the "flipped" status of the cards, so when the 
+  // Restart Game button is pressed, the cards shuffle and get flipped to their front side (black side)
   assignCards(); // finally, calls assignCards function which assigns new card types to each card in a shuffled order
 });
 
@@ -108,16 +132,6 @@ function shuffle(array) {
 // function playerScores() {
 //   // needs to increment the score when a match is made
 //   // needs to display the score to the appropriate player
-// }
-
-// function checkForMatch() {
-//   // if (card1 !== card2) {
-//   // flip back over
-//   // }
-//   //
-//   // else {
-//   // remove them or mark them as unavailable / unclickable
-//   // }
 // }
 
 assignCards();
