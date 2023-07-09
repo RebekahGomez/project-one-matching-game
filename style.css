@@ -65,6 +65,13 @@ section {
   background-color: red;
 }
 
+/* here we're creating a custom dataType "data-card-type" - CSS can NOT use camelCase, so we need to use dashes
+to separate the words.  But we access this property in JS with the "dataset" property.  So in our JS file,
+we're calling to this section with: dataset.cardType 
+This line of code in JS: cards[i].dataset.cardType = cardTypes[i]; assigns each of the cards a cardType
+from the shuffled cards, and the cardType is defined here in CSS.  Each index is assigned a color on the
+back of the card. */
+
 .card[data-card-type="1"] .back {
   background-color: blue;
 }

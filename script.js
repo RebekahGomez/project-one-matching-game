@@ -19,6 +19,7 @@
 // Function to determine gameEnd - check if all pairs have been found
 // Computer will announce the winner or if there is a tie
 
+
 let cards = document.querySelectorAll(".card");
 let currentPlayer = "X"
 let gameOver = false;
@@ -48,12 +49,12 @@ let resetButton = document.querySelector(".restart");
 resetButton.addEventListener("click", () => {
   currentPlayer = "X";
   gameOver = false;
-  cards.forEach((card) => {
-    card.dataset.cardType = "";
-    card.classList.remove("matched");
-  });
+  cards.forEach((card) => { // this is a loop that goes through each card. forEach card, it removes
+    card.dataset.cardType = ""; // the cardType data attribute (sets it to an empty string)
+    card.classList.remove("matched"); // and removes the "matched" class. This effectively resets
+  }); // the state of each card "erasing" what type of card it is and whether it's been matched or not.
   // shuffle();
-  assignCards();
+  assignCards(); // finally, calls assignCards function which assigns new card types to each card in a shuffled order
 });
 
 
@@ -76,19 +77,21 @@ resetButton.addEventListener("click", () => {
 
 function assignCards() {
   let cardTypes = [];
-  for (let i = 0; i < 10; i++) {
-    cardTypes.push(i, i);
+  for (let i = 0; i < 10; i++) { // this populates the cardTypes array with numbers up to but not including 10
+    cardTypes.push(i, i); // we're pushing the same number twice to create a matching pair
   }
 
   cardTypes = shuffle(cardTypes);
   let cards = document.querySelectorAll(".card");
   for (let i = 0; i < cards.length; i++) {
-    cards[i].dataset.cardType = cardTypes[i];
-  }
+    cards[i].dataset.cardType = cardTypes[i]; // assigns each of the cards a cardType from the shuffled cardTypes array
+  } // dataset.cardType is a way to set a custom data attribute ('data-card-type') on each card element
+  // the dataset.cardType is assigning the value of the card to a number in an array from 0-9, and then in the CSS,
+  // we have said "the card with the data-card-type of [0] - [9] gets this color."
 }
 
 function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) {
+  for (let i = array.length - 1; i > 0; i--) { // this starts at the end of the array and decrements "i" until it hits the beginning of the array
     const j = Math.floor(Math.random() * (i + 1));
     let temp = array[i]
     array[i] = array[j]
@@ -116,4 +119,6 @@ function shuffle(array) {
 //   // remove them or mark them as unavailable / unclickable
 //   // }
 // }
+
+assignCards();
 
