@@ -21,8 +21,9 @@ section {
   margin: auto 50px;
 }
 
-.cell {
+.card {
   font-family: serif;
+  position: relative;
   width: 100px;
   height: 100px;
   box-shadow: 0 0 0 1px #333333;
@@ -32,29 +33,70 @@ section {
   font-size: 60px;
   margin: 10px;
   font-size: 100px;
+  perspective: 1000px;
 }
 
-.cell[data-card-type="0"],
-.cell[data-card-type="1"] {
+.front,
+.back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  transition: transform 0.5s;
+}
+
+.front {
+  background-color: #000;
+}
+
+.back {
+  transform: rotateY(180deg);
+}
+
+.card.flipped .front {
+  transform: rotateY(180deg);
+}
+
+.card.flipped .back {
+  transform: rotateY(0);
+}
+
+.card[data-card-type="0"] .back {
   background-color: red;
 }
 
-.cell[data-card-type="2"],
-.cell[data-card-type="3"] {
+.card[data-card-type="1"] .back {
   background-color: blue;
 }
 
-.cell[data-card-type="4"],
-.cell[data-card-type="5"] {
+.card[data-card-type="2"] .back {
   background-color: green;
 }
 
-.cell[data-card-type="6"],
-.cell[data-card-type="7"] {
+.card[data-card-type="3"] .back {
   background-color: purple;
 }
 
-.cell[data-card-type="8"],
-.cell[data-card-type="9"] {
+.card[data-card-type="4"] .back {
   background-color: yellow;
+}
+
+.card[data-card-type="5"] .back {
+  background-color: darkred;
+}
+
+.card[data-card-type="6"] .back {
+  background-color: darkblue;
+}
+
+.card[data-card-type="7"] .back {
+  background-color: darkorange;
+}
+
+.card[data-card-type="8"] .back {
+  background-color: darkcyan;
+}
+
+.card[data-card-type="9"] .back {
+  background-color: darkgoldenrod;
 }

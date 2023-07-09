@@ -19,14 +19,14 @@
 // Function to determine gameEnd - check if all pairs have been found
 // Computer will announce the winner or if there is a tie
 
-let cards = document.querySelectorAll(".cell");
+let cards = document.querySelectorAll(".card");
 let currentPlayer = "X"
 let gameOver = false;
 
 cards.forEach((card) => {
-  card.addEventListener("click", (clickEventFunction) => {
-    // function should go here for what happens when a user clicks a card
-    // function to flip a card?
+  card.addEventListener("click", () => {
+    card.classList.toggle("flipped");
+
     if (!gameOver) {
       currentPlayer = currentPlayer === "X" ? "O" : "X";
       // include the condition player must have flipped 2 cards whether they match or not
@@ -81,9 +81,9 @@ function assignCards() {
   }
 
   cardTypes = shuffle(cardTypes);
-  let cells = document.querySelectorAll(".cell");
-  for (let i = 0; i < cells.length; i++) {
-    cells[i].dataset.cardType = cardTypes[i];
+  let cards = document.querySelectorAll(".card");
+  for (let i = 0; i < cards.length; i++) {
+    cards[i].dataset.cardType = cardTypes[i];
   }
 }
 
