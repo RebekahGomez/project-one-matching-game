@@ -15,8 +15,15 @@
 - Have a "reset" button that automatically shuffles the cards and disperses them facedown.
 
 ### Futher Coding Objectives if there's time
+- Allow users to enter "Player's Name"
+- Prompt the user at the beginning "Play with 2 players or play against the computer?"
+- Have a single-player mode that tracks how many turns it took to complete the game
 - Functionality for user to select how many matching pairs the game starts with
 - Potentially pull the images from an API
 - Have users be able to select different card themes (dogs, cats, NY buildings, etc.)
-  This probably wouldn't work with an API
+  This probably wouldn't work with an API?
+- Increase difficulty (number of cards) each round
+  - Ask user after each game "Next level or play again?"
+  - Maybe have arrows on either side of game to go to harder level or easier level
+  - Include Level Number somewhere on the screen (EG: level 3 of 20)
 
