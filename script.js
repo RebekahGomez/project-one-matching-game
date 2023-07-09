@@ -27,20 +27,18 @@ cards.forEach((card) => {
   card.addEventListener("click", (clickEventFunction) => {
     // function should go here for what happens when a user clicks a card
     // function to flip a card?
-
-    if (checkForWin()) {
-      gameOver = true;
-      setTimeout(() => {
-        alert(`${currentPlayer} wins!`);
-      }, 10);
-    } else if (checkForTie()) {
-      setTimeout(() => {
-        alert("It's a tie!");
-      }, 10);
-    }
     if (!gameOver) {
       currentPlayer = currentPlayer === "X" ? "O" : "X";
       // include the condition player must have flipped 2 cards whether they match or not
+      // } else if (checkForWin()) {
+      //   gameOver = true;
+      //   setTimeout(() => {
+      //     alert(`${currentPlayer} wins!`);
+      //   }, 10);
+      // } else (checkForTie()) {
+      //   setTimeout(() => {
+      //     alert("It's a tie!");
+      //   }, 10);
     }
   });
 });
@@ -48,50 +46,74 @@ cards.forEach((card) => {
 let resetButton = document.querySelector(".restart");
 
 resetButton.addEventListener("click", () => {
-  boxes.forEach((box) => {
-    box.innerText = "";
-  });
   currentPlayer = "X";
   gameOver = false;
-})
+  cards.forEach((card) => {
+    card.dataset.cardType = "";
+    card.classList.remove("matched");
+  });
+  // shuffle();
+  assignCards();
+});
 
 
-function gameOver() { // check for game over after every turn
-  // have all cards been matched
-  // if yes - check for winner
-  function checkForWin() {
-    // even if there are still cards on the board, game 
-    // should continue until all cards are matched
+// function gameOver() { // check for game over after every turn
+//   // have all cards been matched
+//   // if yes - check for winner
+// }
+
+// function checkForWin() {
+//   // even if there are still cards on the board, game 
+//   // should continue until all cards are matched
+//   // alert(`${playerX} is the winner!`)
+// }
+
+// function checkForTie() {
+//   // alert(`It's a tie`);
+// }
+
+
+
+function assignCards() {
+  let cardTypes = [];
+  for (let i = 0; i < 10; i++) {
+    cardTypes.push(i, i);
   }
-  // elsex - check for a tie
 
-  function checkForTie() {
-
+  cardTypes = shuffle(cardTypes);
+  let cells = document.querySelectorAll(".cell");
+  for (let i = 0; i < cells.length; i++) {
+    cells[i].dataset.cardType = cardTypes[i];
   }
-  alert(`${x player} is the winner` or `It's a tie`);
 }
 
-function shuffle() {
-  // must be truly random
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    let temp = array[i]
+    array[i] = array[j]
+    array[j] = temp
+  }
+  return array;
 }
 
-function errorHandling() {
-  // cannot click the same card during same hand
-  // cannot click 3+ cards
-}
+// function errorHandling() {
+//   // cannot click the same card during same hand
+//   // cannot click 3+ cards
+// }
 
-function playerScores() {
-  // needs to increment the score when a match is made
-  // needs to display the score to the appropriate player
-}
+// function playerScores() {
+//   // needs to increment the score when a match is made
+//   // needs to display the score to the appropriate player
+// }
 
-function checkForMatch() {
-  // if (card1 !== card2) {
-  // flip back over
-  // }
-  //
-  // else {
-  // remove them or mark them as unavailable / unclickable
-  // }
-}
+// function checkForMatch() {
+//   // if (card1 !== card2) {
+//   // flip back over
+//   // }
+//   //
+//   // else {
+//   // remove them or mark them as unavailable / unclickable
+//   // }
+// }
 

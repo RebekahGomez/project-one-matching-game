@@ -33,3 +33,28 @@ section {
   margin: 10px;
   font-size: 100px;
 }
+
+.cell[data-card-type="0"],
+.cell[data-card-type="1"] {
+  background-color: red;
+}
+
+.cell[data-card-type="2"],
+.cell[data-card-type="3"] {
+  background-color: blue;
+}
+
+.cell[data-card-type="4"],
+.cell[data-card-type="5"] {
+  background-color: green;
+}
+
+.cell[data-card-type="6"],
+.cell[data-card-type="7"] {
+  background-color: purple;
+}
+
+.cell[data-card-type="8"],
+.cell[data-card-type="9"] {
+  background-color: yellow;
+}
