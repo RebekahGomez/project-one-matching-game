@@ -47,12 +47,14 @@ document.querySelector(".twoPlayer").addEventListener("click", () => {
   startGame();
 });
 
-p1score.classList.add("hidden");
-p2score.classList.add("hidden");
 currentPlayerName.classList.add("hidden");
 
 function startGame() {
+  p1score.classList.add("hidden");
+  p2score.classList.add("hidden");
   choice.classList.add("hidden");
+  currentPlayerName.classList.add("hidden");
+  restart();
   if (gameMode === "single player") {
     cards.forEach((card) => {
       card.addEventListener("click", () => {
@@ -95,6 +97,8 @@ function startGame() {
     p1score.classList.remove("hidden");
     p2score.classList.remove("hidden");
     currentPlayerName.classList.remove("hidden");
+
+    // assignCards();
 
     cards.forEach((card) => {
       card.addEventListener("click", () => {
@@ -172,7 +176,7 @@ function startGame() {
 
 let resetButton = document.querySelector(".restart");
 
-resetButton.addEventListener("click", () => {
+let restart = () => {
   document.querySelector('#currentPlayer').textContent = currentPlayer; // this makes sure when the reset button is pressed, Player 1 starts
   gameOver = false;
   player1Score = 0;
@@ -186,7 +190,8 @@ resetButton.addEventListener("click", () => {
   }); // finally, card.classList.remove("flipped") removes the "flipped" status of the cards, so when the 
   // Restart Game button is pressed, the cards shuffle and get flipped to their front side (black side)
   assignCards(); // finally, calls assignCards function which assigns new card types to each card in a shuffled order
-});
+}
+resetButton.addEventListener("click", restart);
 
 function assignCards() {
   cardTypes = [];
