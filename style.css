@@ -107,3 +107,7 @@ back of the card. */
 .card[data-card-type="9"] .back {
   background-color: darkgoldenrod;
 }
+
+.matched {
+  box-shadow: 5px 10px;
+}

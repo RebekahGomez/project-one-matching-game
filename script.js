@@ -43,12 +43,16 @@ cards.forEach((card) => {
 
         if (firstCard.dataset.cardType !== secondCard.dataset.cardType) {
           setTimeout(() => {
-            firstCard.classList.remove("flipped");
-            secondCard.classList.remove("flipped");
+            if (!firstCard.classList.contains("matched") && !secondCard.classList.contains("matched")) {
+              firstCard.classList.remove("flipped");
+              secondCard.classList.remove("flipped");
+            }
             firstCard = null;
             secondCard = null
           }, 1000);
         } else {
+          firstCard.classList.add("matched");
+          secondCard.classList.add("matched");
           firstCard = null;
           secondCard = null;
         }
