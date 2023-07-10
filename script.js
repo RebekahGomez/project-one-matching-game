@@ -28,6 +28,8 @@ let secondCard = null;
 let gameMode = null;
 let matchedPairs = 0;
 let cardTypes = [];
+let p1score = document.querySelector(".p1score");
+let p2score = document.querySelector(".p2score");
 
 
 document.querySelector(".singlePlayer").addEventListener("click", () => {
@@ -39,6 +41,9 @@ document.querySelector(".twoPlayer").addEventListener("click", () => {
   gameMode = "two players";
   startGame();
 });
+
+p1score.classList.add("hidden");
+p2score.classList.add("hidden");
 
 function startGame() {
   if (gameMode === "single player") {
@@ -81,6 +86,8 @@ function startGame() {
       });
     });
   } else if (gameMode === "two players") {
+    p1score.classList.remove("hidden");
+    p2score.classList.remove("hidden");
     cards.forEach((card) => {
       card.addEventListener("click", () => {
 
