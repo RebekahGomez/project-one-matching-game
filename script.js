@@ -75,7 +75,6 @@ function startGame() {
             secondCard.classList.add("matched");
             firstCard = null;
             secondCard = null;
-            // console.log("match was found");
             matchedPairs++;
           }
           if (matchedPairs === cardTypes.length / 2) {
@@ -113,6 +112,8 @@ function startGame() {
                 firstCard = null;
                 secondCard = null
               }, 500);
+
+              currentPlayer = currentPlayer === "Player 1" ? "Player 2" : "Player 1";
             } else {
               firstCard.classList.add("matched");
               secondCard.classList.add("matched");
@@ -127,12 +128,18 @@ function startGame() {
                 player2Score++;
                 document.getElementById("player2Score").textContent = player2Score;
               }
-              currentPlayer = currentPlayer === "Player 1" ? "Player 2" : "Player 1";
             }
+
             if (matchedPairs === cardTypes.length / 2) {
               gameOver = true;
               setTimeout(() => {
-                alert("Game Over");
+                if (player1Score > player2Score) {
+                  alert("player 1 is the winner");
+                } else if (player2Score > player1Score) {
+                  alert("player 2 is the winner");
+                } else {
+                  alert("it's a tie");
+                }
               }, 100);
             }
           }
@@ -187,6 +194,14 @@ function shuffle(array) {
 }
 
 assignCards();
+
+// if (player1Score > player1Score) {
+//   alert("player 1 is the winner");
+// } else if (player2Score > player1Score) {
+//   alert("player 2 is the winner");
+// } else {
+//   alert("it's a tie");
+// }
 
   // include the condition player must have flipped 2 cards whether they match or not
       // } else if (checkForWin()) {
