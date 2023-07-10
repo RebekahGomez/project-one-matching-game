@@ -30,6 +30,8 @@ let matchedPairs = 0;
 let cardTypes = [];
 let p1score = document.querySelector(".p1score");
 let p2score = document.querySelector(".p2score");
+let player1Score = 0;
+let player2Score = 0;
 
 
 document.querySelector(".singlePlayer").addEventListener("click", () => {
@@ -92,7 +94,6 @@ function startGame() {
       card.addEventListener("click", () => {
 
         if (!gameOver) {
-          currentPlayer = currentPlayer === "Player 1" ? "Player 2" : "Player 1";
 
           if (!card.classList.contains("flipped") && firstCard !== card && secondCard !== card) {
             card.classList.add("flipped");
@@ -118,7 +119,15 @@ function startGame() {
               firstCard = null;
               secondCard = null;
               matchedPairs++
-              // console.log(matchedPairs, cardTypes.lenth / 2);
+
+              if (currentPlayer === "Player 1") {
+                player1Score++;
+                document.getElementById("player1Score").textContent = player1Score;
+              } else {
+                player2Score++;
+                document.getElementById("player2Score").textContent = player2Score;
+              }
+              currentPlayer = currentPlayer === "Player 1" ? "Player 2" : "Player 1";
             }
             if (matchedPairs === cardTypes.length / 2) {
               gameOver = true;
@@ -137,8 +146,12 @@ function startGame() {
 let resetButton = document.querySelector(".restart");
 
 resetButton.addEventListener("click", () => {
-  currentPlayer = "X";
+  currentPlayer = "Player 1";
   gameOver = false;
+  player1Score = 0;
+  player2Score = 0;
+  document.getElementById("player1Score").textContent = player1Score;
+  document.getElementById("player2Score").textContent = player2Score;
   cards.forEach((card) => { // this is a loop that goes through each card. forEach card, it removes
     card.dataset.cardType = ""; // the cardType data attribute (sets it to an empty string)
     card.classList.remove("matched"); // and removes the "matched" class. This effectively resets
