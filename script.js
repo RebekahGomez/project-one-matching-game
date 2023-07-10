@@ -22,6 +22,8 @@
 
 let cards = document.querySelectorAll(".card");
 let currentPlayer = "Player 1"
+let currentPlayer2 = "Player 2"
+let currentPlayerName = document.querySelector(".currentPlayer");
 let gameOver = false;
 let firstCard = null;
 let secondCard = null;
@@ -46,6 +48,7 @@ document.querySelector(".twoPlayer").addEventListener("click", () => {
 
 p1score.classList.add("hidden");
 p2score.classList.add("hidden");
+currentPlayerName.classList.add("hidden");
 
 function startGame() {
   if (gameMode === "single player") {
@@ -89,6 +92,8 @@ function startGame() {
   } else if (gameMode === "two players") {
     p1score.classList.remove("hidden");
     p2score.classList.remove("hidden");
+    currentPlayerName.classList.remove("hidden");
+
     cards.forEach((card) => {
       card.addEventListener("click", () => {
 
@@ -96,7 +101,7 @@ function startGame() {
           return
         }
 
-        console.log("clicked!!!")
+        // console.log("clicked!!!")
 
         if (!gameOver) {
 
@@ -120,6 +125,13 @@ function startGame() {
               }, 500);
 
               currentPlayer = currentPlayer === "Player 1" ? "Player 2" : "Player 1";
+
+              if (currentPlayer === "Player 1") {
+                document.getElementById("currentPlayer").textContent = currentPlayer;
+              } else {
+                document.getElementById("currentPlayer").textContent = currentPlayer2;
+              }
+
             } else {
               firstCard.classList.add("matched");
               secondCard.classList.add("matched");
@@ -160,6 +172,7 @@ let resetButton = document.querySelector(".restart");
 
 resetButton.addEventListener("click", () => {
   currentPlayer = "Player 1";
+  document.querySelector('#currentPlayer').textContent = currentPlayer;
   gameOver = false;
   player1Score = 0;
   player2Score = 0;
