@@ -34,6 +34,7 @@ let p1score = document.querySelector(".p1score");
 let p2score = document.querySelector(".p2score");
 let player1Score = 0;
 let player2Score = 0;
+let choice = document.querySelector(".choice");
 
 
 document.querySelector(".singlePlayer").addEventListener("click", () => {
@@ -51,6 +52,7 @@ p2score.classList.add("hidden");
 currentPlayerName.classList.add("hidden");
 
 function startGame() {
+  choice.classList.add("hidden");
   if (gameMode === "single player") {
     cards.forEach((card) => {
       card.addEventListener("click", () => {
@@ -72,7 +74,7 @@ function startGame() {
               }
               firstCard = null;
               secondCard = null
-            }, 1000);
+            }, 500);
           } else {
             firstCard.classList.add("matched");
             secondCard.classList.add("matched");
@@ -126,7 +128,7 @@ function startGame() {
 
               currentPlayer = currentPlayer === "Player 1" ? "Player 2" : "Player 1";
 
-              if (currentPlayer === "Player 1") {
+              if (currentPlayer === "Player 1") { // this block of code displays the current player at the top of the page
                 document.getElementById("currentPlayer").textContent = currentPlayer;
               } else {
                 document.getElementById("currentPlayer").textContent = currentPlayer2;
@@ -171,8 +173,7 @@ function startGame() {
 let resetButton = document.querySelector(".restart");
 
 resetButton.addEventListener("click", () => {
-  currentPlayer = "Player 1";
-  document.querySelector('#currentPlayer').textContent = currentPlayer;
+  document.querySelector('#currentPlayer').textContent = currentPlayer; // this makes sure when the reset button is pressed, Player 1 starts
   gameOver = false;
   player1Score = 0;
   player2Score = 0;

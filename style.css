@@ -17,6 +17,12 @@ section {
   margin: 10px;
 }
 
+.choice {
+  font-family: sans-serif;
+  font-size: 25px;
+  color: red;
+}
+
 .game-container {
   display: grid;
   grid-template-columns: repeat(4, auto);
