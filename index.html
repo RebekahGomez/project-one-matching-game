@@ -10,9 +10,13 @@
 </head>
 
 <body>
-  <div class="p1score">Player 1 Score: <span id="player1Score">0</span></div>
+  <div class="p1score">Player 1 Score:<br><span id="player1Score">0</span></div>
   <section>
     <h1 class="title">Matching Card Game</h1>
+    <div class="popupButtons">
+      <button class="singlePlayer">Single Player Mode</button>
+      <button class="twoPlayer">Two Player Mode</button>
+    </div>
     <div class="game-container">
       <div class="card" data-index="0">
         <div class="front"></div>
@@ -97,12 +101,8 @@
     </div>
     <h2 class="status"></h2>
     <button class="restart">Restart Game</button>
-    <div class="popupButtons">
-      <button class="singlePlayer">Single Player Mode</button>
-      <button class="twoPlayer">Two Player Mode</button>
-    </div>
   </section>
-  <div class="p2score">Player 2 Score: <span id="player2Score">0</span></div>
+  <div class="p2score">Player 2 Score:<br><span id="player2Score">0</span></div>
 </body>
 
 </html>

@@ -92,6 +92,12 @@ function startGame() {
     cards.forEach((card) => {
       card.addEventListener("click", () => {
 
+        if (card.classList.contains("matched")) {
+          return
+        }
+
+        console.log("clicked!!!")
+
         if (!gameOver) {
 
           if (!card.classList.contains("flipped") && firstCard !== card && secondCard !== card) {

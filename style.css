@@ -1,6 +1,6 @@
 body {
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: auto auto auto auto auto;
   align-items: center;
   justify-content: center;
 }
@@ -27,6 +27,16 @@ section {
 .p1score,
 .p2score {
   margin: auto 50px;
+  font-family: cursive;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}
+
+#player1Score,
+#player2Score {
+  font-size: 40px;
+  text-align: right;
 }
 
 .card {
