@@ -16,8 +16,8 @@
 
 ### Futher Coding Objectives if there's time
 - Allow users to enter "Player's Name"
-- Prompt the user at the beginning "Play with 2 players or play against the computer?"
-- Have a single-player mode that tracks how many turns it took to complete the game
+- Prompt the user at the beginning "Single Player mode? Play with 2 players? or Play against the computer?"
+- Ssingle-player mode - track how many turns it took to complete the game
 - Functionality for user to select how many matching pairs the game starts with
 - Potentially pull the images from an API
 - Have users be able to select different card themes (dogs, cats, NY buildings, etc.)

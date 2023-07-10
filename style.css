@@ -9,6 +9,10 @@ section {
   text-align: center;
 }
 
+.popupButtons {
+  margin: 10px;
+}
+
 .game-container {
   display: grid;
   grid-template-columns: repeat(4, auto);
