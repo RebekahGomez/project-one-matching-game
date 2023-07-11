@@ -35,81 +35,48 @@ let p2score = document.querySelector(".p2score");
 let player1Score = 0;
 let player2Score = 0;
 let choice = document.querySelector(".choice");
+let spMode = document.querySelector(".singlePlayer");
+let tpMode = document.querySelector(".twoPlayer");
+let clickable = true;
 
+const hideAll = () => {
+  choice.classList.add("hidden");
+  spMode.classList.add("hidden");
+  tpMode.classList.add("hidden");
+  currentPlayerName.classList.add("hidden");
+  p1score.classList.add("hidden");
+  p2score.classList.add("hidden");
+}
 
-document.querySelector(".singlePlayer").addEventListener("click", () => {
+const showAll = () => {
+  choice.classList.remove("hidden");
+  spMode.classList.remove("hidden");
+  tpMode.classList.remove("hidden");
+  currentPlayerName.classList.remove("hidden");
+  p1score.classList.remove("hidden");
+  p2score.classList.remove("hidden");
+}
+
+spMode.addEventListener("click", () => {
   gameMode = "single player";
   startGame();
 });
 
-document.querySelector(".twoPlayer").addEventListener("click", () => {
+tpMode.addEventListener("click", () => {
   gameMode = "two players";
-  currentPlayer = "Player 1";
   startGame();
 });
 
 currentPlayerName.classList.add("hidden");
 
 function startGame() {
-  p1score.classList.add("hidden");
-  p2score.classList.add("hidden");
-  choice.classList.add("hidden");
-  currentPlayerName.classList.add("hidden");
   restart();
+  hideAll();
+
   if (gameMode === "single player") {
     cards.forEach((card) => {
       card.addEventListener("click", () => {
-
-        if (!card.classList.contains("flipped") && firstCard !== card && secondCard !== card) {
-          card.classList.add("flipped");
-        }
-
-        if (!firstCard) {
-          firstCard = card;
-        } else if (!secondCard && firstCard !== card) {
-          secondCard = card;
-
-          if (firstCard.dataset.cardType !== secondCard.dataset.cardType) {
-            setTimeout(() => {
-              if (!firstCard.classList.contains("matched") && !secondCard.classList.contains("matched")) {
-                firstCard.classList.remove("flipped");
-                secondCard.classList.remove("flipped");
-              }
-              firstCard = null;
-              secondCard = null
-            }, 500);
-          } else {
-            firstCard.classList.add("matched");
-            secondCard.classList.add("matched");
-            firstCard = null;
-            secondCard = null;
-            matchedPairs++;
-          }
-          if (matchedPairs === cardTypes.length / 2) {
-            gameOver = true;
-            setTimeout(() => {
-              alert("Congratulations! You beat the game!");
-            }, 100);
-          }
-        }
-      });
-    });
-  } else if (gameMode === "two players") {
-    currentPlayer = "Player 1"; // not necessary for current iteration of the game, but useful if there's a way to access Two Player Mode *other* than clicking on the Two Player button
-    p1score.classList.remove("hidden");
-    p2score.classList.remove("hidden");
-    currentPlayerName.classList.remove("hidden");
-
-    // assignCards();
-
-    cards.forEach((card) => {
-      card.addEventListener("click", () => {
-
-        if (card.classList.contains("matched")) {
-          return
-        }
-
-        if (!gameOver) {
+        if (clickable === true) {
 
           if (!card.classList.contains("flipped") && firstCard !== card && secondCard !== card) {
             card.classList.add("flipped");
@@ -119,6 +86,7 @@ function startGame() {
             firstCard = card;
           } else if (!secondCard && firstCard !== card) {
             secondCard = card;
+            clickable = false;
 
             if (firstCard.dataset.cardType !== secondCard.dataset.cardType) {
               setTimeout(() => {
@@ -128,43 +96,102 @@ function startGame() {
                 }
                 firstCard = null;
                 secondCard = null
-              }, 500);
-
-              currentPlayer = currentPlayer === "Player 1" ? "Player 2" : "Player 1";
-
-              if (currentPlayer === "Player 1") { // this block of code displays the current player at the top of the page
-                document.getElementById("currentPlayer").textContent = currentPlayer;
-              } else {
-                document.getElementById("currentPlayer").textContent = currentPlayer2;
-              }
-
+                clickable = true;
+              }, 500)
             } else {
               firstCard.classList.add("matched");
               secondCard.classList.add("matched");
               firstCard = null;
               secondCard = null;
-              matchedPairs++
-
-              if (currentPlayer === "Player 1") {
-                player1Score++;
-                document.getElementById("player1Score").textContent = player1Score;
-              } else {
-                player2Score++;
-                document.getElementById("player2Score").textContent = player2Score;
-              }
+              clickable = true;
+              matchedPairs++;
             }
-
             if (matchedPairs === cardTypes.length / 2) {
               gameOver = true;
               setTimeout(() => {
-                if (player1Score > player2Score) {
-                  alert("player 1 is the winner");
-                } else if (player2Score > player1Score) {
-                  alert("player 2 is the winner");
-                } else {
-                  alert("it's a tie");
-                }
+                alert("Congratulations! You beat the game!");
               }, 100);
+            }
+          }
+        }
+      });
+    });
+  } else if (gameMode === "two players") {
+    currentPlayer = "Player 1";
+    p1score.classList.remove("hidden");
+    p2score.classList.remove("hidden");
+    currentPlayerName.classList.remove("hidden");
+
+    // assignCards();
+
+    cards.forEach((card) => {
+      card.addEventListener("click", () => {
+        if (clickable === true) {
+
+          if (card.classList.contains("matched")) {
+            return
+          }
+
+          if (!gameOver) {
+
+            if (!card.classList.contains("flipped") && firstCard !== card && secondCard !== card) {
+              card.classList.add("flipped");
+            }
+
+            if (!firstCard) {
+              firstCard = card;
+            } else if (!secondCard && firstCard !== card) {
+              secondCard = card;
+              clickable = false;
+
+              if (firstCard.dataset.cardType !== secondCard.dataset.cardType) {
+                setTimeout(() => {
+                  if (!firstCard.classList.contains("matched") && !secondCard.classList.contains("matched")) {
+                    firstCard.classList.remove("flipped");
+                    secondCard.classList.remove("flipped");
+                  }
+                  firstCard = null;
+                  secondCard = null;
+                  clickable = true;
+                }, 500);
+
+                currentPlayer = currentPlayer === "Player 1" ? "Player 2" : "Player 1";
+
+                if (currentPlayer === "Player 1") { // this block of code displays the current player at the top of the page
+                  document.getElementById("currentPlayer").textContent = currentPlayer;
+                } else {
+                  document.getElementById("currentPlayer").textContent = currentPlayer2;
+                }
+
+              } else {
+                firstCard.classList.add("matched");
+                secondCard.classList.add("matched");
+                firstCard = null;
+                secondCard = null;
+                clickable = true;
+                matchedPairs++
+
+                if (currentPlayer === "Player 1") {
+                  player1Score++;
+                  document.getElementById("player1Score").textContent = player1Score;
+                } else {
+                  player2Score++;
+                  document.getElementById("player2Score").textContent = player2Score;
+                }
+              }
+
+              if (matchedPairs === cardTypes.length / 2) {
+                gameOver = true;
+                setTimeout(() => {
+                  if (player1Score > player2Score) {
+                    alert("player 1 is the winner");
+                  } else if (player2Score > player1Score) {
+                    alert("player 2 is the winner");
+                  } else {
+                    alert("it's a tie");
+                  }
+                }, 100);
+              }
             }
           }
         }
@@ -174,12 +201,12 @@ function startGame() {
 }
 
 
-let resetButton = () => {
-  currentPlayer = "Player 1";
-  document.querySelector("#currentPlayer").textContent = currentPlayer;
-};
+
+let resetButton = document.querySelector(".restart");
 
 let restart = () => {
+  showAll();
+  currentPlayer = "Player 1"
   document.querySelector('#currentPlayer').textContent = currentPlayer; // this makes sure when the reset button is pressed, Player 1 starts
   gameOver = false;
   player1Score = 0;
@@ -223,47 +250,6 @@ function shuffle(array) {
 
 assignCards();
 
-// if (player1Score > player1Score) {
-//   alert("player 1 is the winner");
-// } else if (player2Score > player1Score) {
-//   alert("player 2 is the winner");
-// } else {
-//   alert("it's a tie");
-// }
-
-  // include the condition player must have flipped 2 cards whether they match or not
-      // } else if (checkForWin()) {
-      //   gameOver = true;
-      //   setTimeout(() => {
-      //     alert(`${currentPlayer} wins!`);
-      //   }, 10);
-      // } else (checkForTie()) {
-      //   setTimeout(() => {
-      //     alert("It's a tie!");
-      //   }, 10);
-
-// function gameOver() { // check for game over after every turn
-//   // have all cards been matched
-//   // if yes - check for winner
-// }
-
-// function checkForWin() {
-//   // even if there are still cards on the board, game 
-//   // should continue until all cards are matched
-//   // alert(`${playerX} is the winner!`)
-// }
-
-// function checkForTie() {
-//   // alert(`It's a tie`);
-// }
-
-// function errorHandling() {
-//   // cannot click the same card during same hand
-//   // cannot click 3+ cards
-// }
-
-// function playerScores() {
-//   // needs to increment the score when a match is made
-//   // needs to display the score to the appropriate player
-// }
-
+function toggleClickable() {
+  clickable = !clickable;
+}
