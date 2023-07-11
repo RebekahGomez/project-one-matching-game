@@ -44,6 +44,7 @@ document.querySelector(".singlePlayer").addEventListener("click", () => {
 
 document.querySelector(".twoPlayer").addEventListener("click", () => {
   gameMode = "two players";
+  currentPlayer = "Player 1";
   startGame();
 });
 
@@ -106,8 +107,6 @@ function startGame() {
         if (card.classList.contains("matched")) {
           return
         }
-
-        // console.log("clicked!!!")
 
         if (!gameOver) {
 
