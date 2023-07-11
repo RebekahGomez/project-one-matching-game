@@ -37,21 +37,27 @@ let player2Score = 0;
 let choice = document.querySelector(".choice");
 let spMode = document.querySelector(".singlePlayer");
 let tpMode = document.querySelector(".twoPlayer");
-let clickable = true;
+let clickable = false;
 
-const hideAll = () => {
+const hideHeader = () => {
   choice.classList.add("hidden");
   spMode.classList.add("hidden");
   tpMode.classList.add("hidden");
+}
+
+const showHeader = () => {
+  choice.classList.remove("hidden");
+  spMode.classList.remove("hidden");
+  tpMode.classList.remove("hidden");
+}
+
+const hideTwoPlayer = () => {
   currentPlayerName.classList.add("hidden");
   p1score.classList.add("hidden");
   p2score.classList.add("hidden");
 }
 
-const showAll = () => {
-  choice.classList.remove("hidden");
-  spMode.classList.remove("hidden");
-  tpMode.classList.remove("hidden");
+const showTwoPlayer = () => {
   currentPlayerName.classList.remove("hidden");
   p1score.classList.remove("hidden");
   p2score.classList.remove("hidden");
@@ -71,9 +77,10 @@ currentPlayerName.classList.add("hidden");
 
 function startGame() {
   restart();
-  hideAll();
+  hideHeader();
 
   if (gameMode === "single player") {
+    clickable = true
     cards.forEach((card) => {
       card.addEventListener("click", () => {
         if (clickable === true) {
@@ -117,6 +124,8 @@ function startGame() {
       });
     });
   } else if (gameMode === "two players") {
+    clickable = true
+
     currentPlayer = "Player 1";
     p1score.classList.remove("hidden");
     p2score.classList.remove("hidden");
@@ -160,7 +169,8 @@ function startGame() {
                 if (currentPlayer === "Player 1") { // this block of code displays the current player at the top of the page
                   document.getElementById("currentPlayer").textContent = currentPlayer;
                 } else {
-                  document.getElementById("currentPlayer").textContent = currentPlayer2;
+                  document.getElementById("currentPlayer").textContent = currentPlayer2
+                    ;
                 }
 
               } else {
@@ -205,7 +215,9 @@ function startGame() {
 let resetButton = document.querySelector(".restart");
 
 let restart = () => {
-  showAll();
+  showHeader();
+  hideTwoPlayer();
+
   currentPlayer = "Player 1"
   document.querySelector('#currentPlayer').textContent = currentPlayer; // this makes sure when the reset button is pressed, Player 1 starts
   gameOver = false;
@@ -220,6 +232,9 @@ let restart = () => {
   }); // finally, card.classList.remove("flipped") removes the "flipped" status of the cards, so when the 
   // Restart Game button is pressed, the cards shuffle and get flipped to their front side (black side)
   assignCards(); // finally, calls assignCards function which assigns new card types to each card in a shuffled order
+  clickable = false;
+  firstCard = null;
+  secondCard = null
 }
 resetButton.addEventListener("click", restart);
 
