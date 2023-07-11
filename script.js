@@ -95,6 +95,7 @@ function startGame() {
       });
     });
   } else if (gameMode === "two players") {
+    currentPlayer = "Player 1"; // not necessary for current iteration of the game, but useful if there's a way to access Two Player Mode *other* than clicking on the Two Player button
     p1score.classList.remove("hidden");
     p2score.classList.remove("hidden");
     currentPlayerName.classList.remove("hidden");
@@ -173,7 +174,10 @@ function startGame() {
 }
 
 
-let resetButton = document.querySelector(".restart");
+let resetButton = () => {
+  currentPlayer = "Player 1";
+  document.querySelector("#currentPlayer").textContent = currentPlayer;
+};
 
 let restart = () => {
   document.querySelector('#currentPlayer').textContent = currentPlayer; // this makes sure when the reset button is pressed, Player 1 starts
