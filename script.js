@@ -76,13 +76,17 @@ tpMode.addEventListener("click", () => {
 currentPlayerName.classList.add("hidden");
 
 function startGame() {
-  restart();
+  // restart();
   hideHeader();
+  // firstCard = null;
+  // secondCard = null;
 
   if (gameMode === "single player") {
+    console.log("Inside player one mode")
     clickable = true
     cards.forEach((card) => {
       card.addEventListener("click", () => {
+        if (gameMode === 'two players') return
         if (clickable === true) {
 
           if (!card.classList.contains("flipped") && firstCard !== card && secondCard !== card) {
@@ -117,6 +121,7 @@ function startGame() {
               gameOver = true;
               setTimeout(() => {
                 alert("Congratulations! You beat the game!");
+                restart()
               }, 100);
             }
           }
@@ -124,6 +129,7 @@ function startGame() {
       });
     });
   } else if (gameMode === "two players") {
+    console.log("Inside player two mode")
     clickable = true
 
     currentPlayer = "Player 1";
@@ -200,6 +206,7 @@ function startGame() {
                   } else {
                     alert("it's a tie");
                   }
+                  restart()
                 }, 100);
               }
             }
@@ -221,6 +228,8 @@ let restart = () => {
   currentPlayer = "Player 1"
   document.querySelector('#currentPlayer').textContent = currentPlayer; // this makes sure when the reset button is pressed, Player 1 starts
   gameOver = false;
+  gameMode = null;
+  matchedPairs = 0;
   player1Score = 0;
   player2Score = 0;
   document.getElementById("player1Score").textContent = player1Score;
