@@ -10,9 +10,6 @@ body {
 }
 
 section {
-  /* display: flex;
-  flex-direction: column;
-  justify-content: center; */
   text-align: center;
 }
 
@@ -157,5 +154,22 @@ back of the card. */
   .card {
     width: 50px;
     height: 50px;
+  }
+
+  .choice {
+    font-size: 14px;
+  }
+
+  .p1score {
+    position: absolute;
+    bottom: 30%;
+    font-size: 14px;
+  }
+
+  .p2score {
+    position: absolute;
+    bottom: 30%;
+    left: 50%;
+    font-size: 14px;
   }
 }

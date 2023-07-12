@@ -74,6 +74,8 @@ tpMode.addEventListener("click", () => {
 });
 
 currentPlayerName.classList.add("hidden");
+p1score.classList.add("hidden");
+p2score.classList.add("hidden");
 
 function startGame() {
   // restart();
@@ -128,10 +130,10 @@ function startGame() {
         }
       });
     });
+    // START TWO PLAYER MODE
   } else if (gameMode === "two players") {
     console.log("Inside player two mode")
     clickable = true
-    // what's happening
     currentPlayer = "Player 1";
     p1score.classList.remove("hidden");
     p2score.classList.remove("hidden");
