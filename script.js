@@ -38,6 +38,7 @@ let choice = document.querySelector(".choice");
 let spMode = document.querySelector(".singlePlayer");
 let tpMode = document.querySelector(".twoPlayer");
 let clickable = false;
+let processingPair = false;
 
 const hideHeader = () => {
   choice.classList.add("hidden");
@@ -83,42 +84,48 @@ function startGame() {
 
   // SINGLE PLAYER MODE
   if (gameMode === "single player") {
-    // console.log("Inside player one mode")
     clickable = true
     cards.forEach((card) => {
       card.addEventListener("click", () => {
+        if (processingPair) return;
         if (gameMode === 'two players') return
         if (clickable === true) {
 
           if (!card.classList.contains("flipped") && firstCard !== card && secondCard !== card) {
             card.classList.add("flipped");
           }
-
+          // SELECTING 2 CARDS
           if (!firstCard) {
             firstCard = card;
           } else if (!secondCard && firstCard !== card) {
             secondCard = card;
+            processingPair = true;
             clickable = false;
 
+            // IF CARDS DON'T MATCH, FLIP BACK OVER
             if (firstCard.dataset.cardType !== secondCard.dataset.cardType) {
               setTimeout(() => {
                 if (!firstCard.classList.contains("matched") && !secondCard.classList.contains("matched")) {
                   firstCard.classList.remove("flipped");
                   secondCard.classList.remove("flipped");
-                  clickable = false; // maybe don't need this?
                 }
+                // IF CARDS DON'T MATCH, SET THEIR VALUES BACK TO NULL & MAKE CLICKABLE
                 firstCard = null;
                 secondCard = null
-                clickable = true; // maybe this needs to be move up into the setTimeout function and set to false after a match is made?
+                clickable = true;
+                processingPair = false;
               }, 500)
+              // OTHERWISE, SET THEIR CLASSLIST TO "MATCHED"
             } else {
               firstCard.classList.add("matched");
               secondCard.classList.add("matched");
               firstCard = null;
               secondCard = null;
               clickable = true;
+              processingPair = false;
               matchedPairs++;
             }
+            // END GAME
             if (matchedPairs === cardTypes.length / 2) {
               gameOver = true;
               setTimeout(() => {
@@ -130,9 +137,9 @@ function startGame() {
         }
       });
     });
+
     // START TWO PLAYER MODE
   } else if (gameMode === "two players") {
-    // console.log("Inside player two mode")
     clickable = true
     currentPlayer = "Player 1";
     p1score.classList.remove("hidden");
