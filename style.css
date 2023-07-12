@@ -158,7 +158,7 @@ back of the card. */
 
   .choice {
     font-size: 10px;
-    color: yellow;
+    /* color: yellow; */
   }
 
   .p1score {

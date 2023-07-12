@@ -80,11 +80,10 @@ p2score.classList.add("hidden");
 function startGame() {
   // restart();
   hideHeader();
-  // firstCard = null;
-  // secondCard = null;
 
+  // SINGLE PLAYER MODE
   if (gameMode === "single player") {
-    console.log("Inside player one mode")
+    // console.log("Inside player one mode")
     clickable = true
     cards.forEach((card) => {
       card.addEventListener("click", () => {
@@ -106,10 +105,11 @@ function startGame() {
                 if (!firstCard.classList.contains("matched") && !secondCard.classList.contains("matched")) {
                   firstCard.classList.remove("flipped");
                   secondCard.classList.remove("flipped");
+                  clickable = false; // maybe don't need this?
                 }
                 firstCard = null;
                 secondCard = null
-                clickable = true;
+                clickable = true; // maybe this needs to be move up into the setTimeout function and set to false after a match is made?
               }, 500)
             } else {
               firstCard.classList.add("matched");
@@ -132,7 +132,7 @@ function startGame() {
     });
     // START TWO PLAYER MODE
   } else if (gameMode === "two players") {
-    console.log("Inside player two mode")
+    // console.log("Inside player two mode")
     clickable = true
     currentPlayer = "Player 1";
     p1score.classList.remove("hidden");
@@ -226,7 +226,6 @@ let resetButton = document.querySelector(".restart");
 let restart = () => {
   showHeader();
   hideTwoPlayer();
-
   currentPlayer = "Player 1"
   document.querySelector('#currentPlayer').textContent = currentPlayer; // this makes sure when the reset button is pressed, Player 1 starts
   gameOver = false;
