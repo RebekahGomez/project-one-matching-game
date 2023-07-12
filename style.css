@@ -10,6 +10,9 @@ body {
 }
 
 section {
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center; */
   text-align: center;
 }
 
@@ -27,7 +30,8 @@ section {
   display: grid;
   grid-template-columns: repeat(4, auto);
   width: 500px;
-  margin: 50px auto;
+  /* margin: 50px auto; */
+  justify-content: center;
 }
 
 .p1score,
@@ -134,4 +138,24 @@ back of the card. */
 
 .matched {
   box-shadow: 5px 10px;
+}
+
+@media (max-width: 825px) {
+  body {
+    background-color: gray;
+  }
+
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 435px) {
+  .card {
+    width: 50px;
+    height: 50px;
+  }
 }
