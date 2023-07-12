@@ -158,6 +158,7 @@ back of the card. */
 
   .choice {
     font-size: 10px;
+    font-style: italic;
     /* color: yellow; */
   }
 
