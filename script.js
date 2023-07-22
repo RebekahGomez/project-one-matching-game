@@ -136,7 +136,6 @@ function startGame() {
           selectTwoCards();
 
           // IF CARDS DON'T MATCH, FLIP BACK OVER
-          // console.log(firstCard.dataset.cardType, secondCard.dataset.cardType);
           if (firstCard.dataset.cardType !== secondCard.dataset.cardType) {
             // setTimeout(() => {
             if (!firstCard.classList.contains("matched") && !secondCard.classList.contains("matched")) {
@@ -151,12 +150,12 @@ function startGame() {
             setTimeout(() => {
               firstCard = null;
               secondCard = null
-            }, 1000)
+            }, 500)
             setTimeout(() => {
               clickable = true;
               processingPair = false;
-            }, 1500)
-            // }, 500)
+            }, 500)
+
             // OTHERWISE, SET THEIR CLASSLIST TO "MATCHED"
           } else {
             firstCard.classList.add("matched");
@@ -206,13 +205,13 @@ function startGame() {
             if (!card.classList.contains("flipped") && firstCard !== card && secondCard !== card) {
               card.classList.add("flipped");
             }
-
+            // SELECTING 2 CARDS
             if (!firstCard) {
               firstCard = card;
             } else if (!secondCard && firstCard !== card) {
               secondCard = card;
               clickable = false;
-
+              // IF THE 2 CARDS ARE NOT A MATCH, SET TIMEOUT & FLIP BACK OVER
               if (firstCard.dataset.cardType !== secondCard.dataset.cardType) {
                 setTimeout(() => {
                   if (!firstCard.classList.contains("matched") && !secondCard.classList.contains("matched")) {
@@ -226,13 +225,14 @@ function startGame() {
 
                 currentPlayer = currentPlayer === "Player 1" ? "Player 2" : "Player 1";
 
-                if (currentPlayer === "Player 1") { // this block of code displays the current player at the top of the page
+                // THIS BLOCK OF CODE DISPLAYS CURRENT PLAYER AT TOP OF PAGE
+                if (currentPlayer === "Player 1") {
                   document.getElementById("currentPlayer").textContent = currentPlayer;
                 } else {
                   document.getElementById("currentPlayer").textContent = currentPlayer2
                     ;
                 }
-
+                // OTHERWISE CARDS MATCH, SET THEM TO NULL, SET CLICKABLE TRUE, INCREASE MATCHED PAIRS BY 1
               } else {
                 firstCard.classList.add("matched");
                 secondCard.classList.add("matched");
@@ -241,6 +241,7 @@ function startGame() {
                 clickable = true;
                 matchedPairs++
 
+                // INCREASE THAT PLAYER'S SCORE
                 if (currentPlayer === "Player 1") {
                   player1Score++;
                   document.getElementById("player1Score").textContent = player1Score;
@@ -249,7 +250,7 @@ function startGame() {
                   document.getElementById("player2Score").textContent = player2Score;
                 }
               }
-
+              // GAME OVER
               if (matchedPairs === cardTypes.length / 2) {
                 gameOver = true;
                 setTimeout(() => {
