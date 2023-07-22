@@ -78,6 +78,7 @@ currentPlayerName.classList.add("hidden");
 p1score.classList.add("hidden");
 p2score.classList.add("hidden");
 
+
 function startGame() {
   // restart();
   hideHeader();
@@ -85,8 +86,10 @@ function startGame() {
   // SINGLE PLAYER MODE
   if (gameMode === "single player") {
     clickable = true
+    console.log(cards);
+
     cards.forEach((card) => {
-      card.addEventListener("click", () => {
+      function gameLogic() {
         if (processingPair) return;
         if (gameMode === 'two players') return
         if (clickable === true) {
@@ -95,51 +98,93 @@ function startGame() {
             card.classList.add("flipped");
           }
           // SELECTING 2 CARDS
-          if (!firstCard) {
-            firstCard = card;
-          } else if (!secondCard && firstCard !== card) {
-            secondCard = card;
-            processingPair = true;
-            clickable = false;
+          function selectTwoCards() {
+            if (!firstCard) {
+              firstCard = card;
+              if (firstCard.classList.contains("matched")) {
+                firstCard = null;
+              } else {
+                firstCard = card;
+              }
+            } else if (!secondCard && firstCard !== card) {
 
-            // IF CARDS DON'T MATCH, FLIP BACK OVER
-            if (firstCard.dataset.cardType !== secondCard.dataset.cardType) {
+              secondCard = card;
+              processingPair = true;
+              clickable = false;
+              if (secondCard.classList.contains("matched")) {
+                secondCard = null;
+                firstCard.classList.remove("flipped");
+                firstCard = null;
+                console.log(clickable)
+                clickable = true;
+                console.log(clickable)
+                selectTwoCards();
+              } else {
+                secondCard = card;
+              }
+              console.log(firstCard, secondCard);
+              if (firstCard === null && secondCard === null) {
+                selectTwoCards();
+              }
+              processingPair = false;
+              // clickable = false;
+              console.log(clickable)
+            }
+
+            return;
+          }
+          selectTwoCards();
+
+          // IF CARDS DON'T MATCH, FLIP BACK OVER
+          // console.log(firstCard.dataset.cardType, secondCard.dataset.cardType);
+          if (firstCard.dataset.cardType !== secondCard.dataset.cardType) {
+            // setTimeout(() => {
+            if (!firstCard.classList.contains("matched") && !secondCard.classList.contains("matched")) {
               setTimeout(() => {
-                if (!firstCard.classList.contains("matched") && !secondCard.classList.contains("matched")) {
-                  firstCard.classList.remove("flipped");
+                firstCard.classList.remove("flipped");
+                if (secondCard) {
                   secondCard.classList.remove("flipped");
                 }
-                // IF CARDS DON'T MATCH, SET THEIR VALUES BACK TO NULL & MAKE CLICKABLE
-                firstCard = null;
-                secondCard = null
-                clickable = true;
-                processingPair = false;
               }, 500)
-              // OTHERWISE, SET THEIR CLASSLIST TO "MATCHED"
-            } else {
-              firstCard.classList.add("matched");
-              secondCard.classList.add("matched");
+            }
+            // IF CARDS DON'T MATCH, SET THEIR VALUES BACK TO NULL & MAKE CLICKABLE
+            setTimeout(() => {
               firstCard = null;
-              secondCard = null;
+              secondCard = null
+            }, 1000)
+            setTimeout(() => {
               clickable = true;
               processingPair = false;
-              matchedPairs++;
-            }
-            // END GAME
-            if (matchedPairs === cardTypes.length / 2) {
-              gameOver = true;
-              setTimeout(() => {
-                alert("Congratulations! You beat the game!");
-                restart()
-              }, 100);
-            }
+            }, 1500)
+            // }, 500)
+            // OTHERWISE, SET THEIR CLASSLIST TO "MATCHED"
+          } else {
+            firstCard.classList.add("matched");
+            secondCard.classList.add("matched");
+            firstCard.removeEventListener("click", gameLogic);
+            firstCard = null;
+            secondCard = null;
+            clickable = true;
+            processingPair = false;
+            matchedPairs++;
+          }
+          // END GAME
+          if (matchedPairs === cardTypes.length / 2) {
+            gameOver = true;
+            setTimeout(() => {
+              alert("Congratulations! You beat the game!");
+              restart();
+            }, 100);
           }
         }
-      });
-    });
+      }
+      card.removeEventListener("click", gameLogic);
+      card.addEventListener("click", gameLogic);
+    })
+  }
 
-    // START TWO PLAYER MODE
-  } else if (gameMode === "two players") {
+  // START TWO PLAYER MODE
+  else if (gameMode === "two players") {
     clickable = true
     currentPlayer = "Player 1";
     p1score.classList.remove("hidden");
@@ -224,64 +269,64 @@ function startGame() {
       });
     });
   }
-}
 
 
 
-let resetButton = document.querySelector(".restart");
 
-let restart = () => {
-  showHeader();
-  hideTwoPlayer();
-  currentPlayer = "Player 1"
-  document.querySelector('#currentPlayer').textContent = currentPlayer; // this makes sure when the reset button is pressed, Player 1 starts
-  gameOver = false;
-  gameMode = null;
-  matchedPairs = 0;
-  player1Score = 0;
-  player2Score = 0;
-  document.getElementById("player1Score").textContent = player1Score;
-  document.getElementById("player2Score").textContent = player2Score;
-  cards.forEach((card) => { // this is a loop that goes through each card. forEach card, it removes
-    card.dataset.cardType = ""; // the cardType data attribute (sets it to an empty string)
-    card.classList.remove("matched"); // and removes the "matched" class. This effectively resets
-    card.classList.remove("flipped"); // the state of each card "erasing" what type of card it is and whether it's been matched or not.
-  }); // finally, card.classList.remove("flipped") removes the "flipped" status of the cards, so when the 
-  // Restart Game button is pressed, the cards shuffle and get flipped to their front side (black side)
-  assignCards(); // finally, calls assignCards function which assigns new card types to each card in a shuffled order
-  clickable = false;
-  firstCard = null;
-  secondCard = null
-}
-resetButton.addEventListener("click", restart);
+  let resetButton = document.querySelector(".restart");
 
-function assignCards() {
-  cardTypes = [];
-  for (let i = 0; i < 10; i++) { // this populates the cardTypes array with numbers up to but not including 10
-    cardTypes.push(i, i); // we're pushing the same number twice to create a matching pair
+
+  let restart = () => {
+    showHeader();
+    hideTwoPlayer();
+    currentPlayer = "Player 1"
+    document.querySelector('#currentPlayer').textContent = currentPlayer; // this makes sure when the reset button is pressed, Player 1 starts
+    gameOver = false;
+    gameMode = null;
+    matchedPairs = 0;
+    player1Score = 0;
+    player2Score = 0;
+    document.getElementById("player1Score").textContent = player1Score;
+    document.getElementById("player2Score").textContent = player2Score;
+    cards.forEach((card) => { // this is a loop that goes through each card. forEach card, it removes
+      // card.removeEventListener("click", gameLogic);
+      card.dataset.cardType = ""; // the cardType data attribute (sets it to an empty string)
+      card.classList.remove("matched"); // and removes the "matched" class. This effectively resets
+      card.classList.remove("flipped"); // the state of each card "erasing" what type of card it is and whether it's been matched or not.
+    }); // finally, card.classList.remove("flipped") removes the "flipped" status of the cards, so when the 
+    // Restart Game button is pressed, the cards shuffle and get flipped to their front side (black side)
+    assignCards(); // finally, calls assignCards function which assigns new card types to each card in a shuffled order
+    clickable = false;
+    firstCard = null;
+    secondCard = null
+  }
+  resetButton.addEventListener("click", restart);
+
+  function assignCards() {
+    cardTypes = [];
+    for (let i = 0; i < 10; i++) { // this populates the cardTypes array with numbers up to but not including 10
+      cardTypes.push(i, i); // we're pushing the same number twice to create a matching pair
+    }
+
+    cardTypes = shuffle(cardTypes);
+    let cards = document.querySelectorAll(".card");
+    for (let i = 0; i < cards.length; i++) {
+      cards[i].dataset.cardType = cardTypes[i]; // assigns each of the cards a cardType from the shuffled cardTypes array
+    } // dataset.cardType is a way to set a custom data attribute ('data-card-type') on each card element
+    // the dataset.cardType is assigning the value of the card to a number in an array from 0-9, and then in the CSS,
+    // we have said "the card with the data-card-type of [0] - [9] gets this color."
   }
 
-  cardTypes = shuffle(cardTypes);
-  let cards = document.querySelectorAll(".card");
-  for (let i = 0; i < cards.length; i++) {
-    cards[i].dataset.cardType = cardTypes[i]; // assigns each of the cards a cardType from the shuffled cardTypes array
-  } // dataset.cardType is a way to set a custom data attribute ('data-card-type') on each card element
-  // the dataset.cardType is assigning the value of the card to a number in an array from 0-9, and then in the CSS,
-  // we have said "the card with the data-card-type of [0] - [9] gets this color."
-}
-
-function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) { // this starts at the end of the array and decrements "i" until it hits the beginning of the array
-    const j = Math.floor(Math.random() * (i + 1));
-    let temp = array[i]
-    array[i] = array[j]
-    array[j] = temp
+  function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) { // this starts at the end of the array and decrements "i" until it hits the beginning of the array
+      const j = Math.floor(Math.random() * (i + 1));
+      let temp = array[i]
+      array[i] = array[j]
+      array[j] = temp
+    }
+    return array;
   }
-  return array;
-}
 
-assignCards();
+  assignCards();
 
-function toggleClickable() {
-  clickable = !clickable;
 }
