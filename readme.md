@@ -1,9 +1,10 @@
 # Matching Card Game
-- This currently a game is for 1 or 2 players
+- This is currently a game for 1 or 2 players
 - There is a deck of 20 cards, 10 colors total, all cards start face down
 - The objective is to find the matching pairs.
 - Whichever player has the most matching pairs at the end wins.
 - Link to deployed game [here](https://rebekahgomez.github.io/project-one-matching-game/)
+- This game was created using HTML, CSS, and JavaScript. Updates to the game are ongoing
 
 ## Initial Coding Objectives
 - Create a deck of cards with different colors
