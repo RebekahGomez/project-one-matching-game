@@ -93,7 +93,9 @@ function startGame() {
         if (processingPair) return;
         if (gameMode === 'two players') return
         if (clickable === true) {
-
+          if (card.classList.contains("matched")) {
+            return
+          }
           if (!card.classList.contains("flipped") && firstCard !== card && secondCard !== card) {
             card.classList.add("flipped");
           }
@@ -211,6 +213,7 @@ function startGame() {
             } else if (!secondCard && firstCard !== card) {
               secondCard = card;
               clickable = false;
+              console.log(firstCard, secondCard)
               // IF THE 2 CARDS ARE NOT A MATCH, SET TIMEOUT & FLIP BACK OVER
               if (firstCard.dataset.cardType !== secondCard.dataset.cardType) {
                 setTimeout(() => {
