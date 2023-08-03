@@ -29,3 +29,4 @@
   - Maybe have arrows on either side of game to go to harder level or easier level
   - Include Level Number somewhere on the screen (EG: level 3 of 20)
 
+[Rebekah Gomez, 2023](https://www.linkedin.com/in/rebekah-gomez/)
